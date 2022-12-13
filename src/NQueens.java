@@ -2,33 +2,26 @@ import java.util.BitSet;
 import java.util.HashSet;
 
 public class NQueens {
+    //bit set: col = n, main = col-row - n-1+1, minor = col + row - 1
 
     public static boolean isLegalPosition(int[] board, int n) {
-        int lastRow = n;
-        HashSet<Integer> seen = new HashSet<>();
-        for (int column = 0; column < lastRow; column++) {
-            if (board[column] == 0) {
-                lastRow = column;
-                break;
-            }
-            if (!seen.add(board[column])) {
-                return false;
-            }
+        //last row
+        int lastRow = 0;
+        while (lastRow < n - 1 && board[lastRow] != 0) {
+            lastRow++;
         }
-        //maj min diag check.
-        //offsets should be equal if they're on the same diagonal. trivial to see if on main diag where (0,0),(1,1)
-        // interfere: 0-1 = -1, 0-1 = -1.
-        for (int currentRow = 0; currentRow < lastRow; currentRow++) {
-            for (int targetRow = currentRow + 1; targetRow < lastRow; targetRow++) { //if we interfere with a previous
-                // row, then that previous row interferes with us, so start at +1 previous.
-                if (targetRow == currentRow) {
-                    continue;
-                }
-                int rowDif = Math.abs(currentRow - targetRow);
-                int colDif = Math.abs(board[currentRow] - board[targetRow]);
-                if (colDif == rowDif) {
-                    return false;
-                }
+        BitSet col = new BitSet(n);
+        BitSet major = new BitSet(2 * n - 1);
+        BitSet minor = new BitSet(2 * n - 1);
+
+        for (int row = 0; row <= lastRow; row++) {
+            if (!col.get(board[row]) && !major.get(board[row] - row + n - 2) && !minor.get(board[row] + row - 1)) {
+                col.set(board[row], true);
+                major.set(board[row] - row + n - 2, true);
+                minor.set(board[row] + row - 1, true);
+            } else {
+                //if theres already something in the col, either diag
+                return false;
             }
         }
         return true;
@@ -37,7 +30,7 @@ public class NQueens {
     //TODO allowed to have another method thats optimized?
     private static boolean isLegalPositionForBuilding(int[] board, int lastEntry, BitSet main, BitSet minor,
                                                       BitSet col) {
-        //col
+
         return false;
     }
 
@@ -48,21 +41,6 @@ public class NQueens {
         BitSet minor = new BitSet(2 * n - 1);
         numberOfSolutions(0, n, answer, col, major, minor);
         return answer[0];
-        //        int[] board = new int[n];
-        //        BitSet col = new BitSet(n);
-        //        //pos offset
-        //        BitSet major = new BitSet(2 * n - 1);
-        //        //minor offset
-        //        BitSet minor = new BitSet(2 * n - 1);
-        //        //each queen will add one entry to each bitset
-        //        int solutions = 0;
-        //        for (int column = 0; column < n; column++) {
-        //            //TODO go through all columns for n sized board.
-        //        }
-        //        //definition of solution
-        //        //if isLegalPosition == true && lastEntry == n-1 (last row has queen)
-        //        return solutions;
-
     }
 
     private static void numberOfSolutions(int lastRow, int n, long[] solutions, BitSet col, BitSet major,
