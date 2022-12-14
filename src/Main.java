@@ -9,11 +9,11 @@ public class Main {
     }
 
     private static void testFirstSolution() {
-        NQueens.firstSolution(4);
+//        NQueens.firstSolution(4);
 //        NQueens.firstSolution(5);
 //        NQueens.firstSolution(6);
 //        NQueens.firstSolution(7);
-//        NQueens.firstSolution(8);
+        NQueens.firstSolution(8);
 //        NQueens.firstSolution(9);
 //        NQueens.firstSolution(11);
 //        NQueens.firstSolution(12);

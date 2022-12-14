@@ -53,7 +53,7 @@ public class NQueens {
             solutions[0] += 1;
             return;
         }
-        for (int column = 0; column < n; column++) {
+        for (int column = 0; column < n; column++) {//and row
             //dont use defaultValue subtraction because were not working on array, just the truth values that would
             // be at a certain index;
             //bring isLegal function inline to have better program flow
@@ -128,6 +128,9 @@ public class NQueens {
                     if (col > n) {
                         board[lastQueenRowIndex - 1] = 0;
                         board[lastQueenRowIndex - 2] = (board[lastQueenRowIndex - 2] + 1) % (n + 1);
+                        if (lastQueenRowIndex == 3) {//3 is magic number for startRow + backtrackingMutations(2)
+                            board[0] = (board[0] + 1) % (n + 1);
+                        }
                         nextLegalPosition(board, n);
                         break;
                     }
