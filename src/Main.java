@@ -2,15 +2,49 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        testNextLegalPosition();
-        //                testIsLegalAndEnglingBoard();
-        //        testNumberOfSolutionsForN();
+//        testNextLegalPosition();
+//        testIsLegalAndEnglingBoard();
+        testFirstSolution();
+        //TODO uncomment when turning in        testNumberOfSolutionsForN();
+    }
+
+    private static void testFirstSolution() {
+        NQueens.firstSolution(4);
+//        NQueens.firstSolution(5);
+//        NQueens.firstSolution(6);
+//        NQueens.firstSolution(7);
+//        NQueens.firstSolution(8);
+//        NQueens.firstSolution(9);
+//        NQueens.firstSolution(11);
+//        NQueens.firstSolution(12);
+//        NQueens.firstSolution(13);
+//        NQueens.firstSolution(14);
+//        NQueens.firstSolution(15);
+//        NQueens.firstSolution(16);
+//        NQueens.firstSolution(17);
+//        NQueens.firstSolution(18);
+//        NQueens.firstSolution(19);
+//        NQueens.firstSolution(21);
+//        NQueens.firstSolution(22);
+//        NQueens.firstSolution(23);
+//        NQueens.firstSolution(24);
+//        NQueens.firstSolution(25);
+//        NQueens.firstSolution(26);
+//        NQueens.firstSolution(27);
+//        NQueens.firstSolution(28);
+//        NQueens.firstSolution(29);
+//        NQueens.firstSolution(31);
+//        NQueens.firstSolution(32);
+//        NQueens.firstSolution(33);
+//        NQueens.firstSolution(34);
+//        NQueens.firstSolution(35);
     }
 
     private static void testNextLegalPosition() {
-        //the next move after a legal position is passed to next legal position will not always result in a next-rank
-        // placement. this is because if you start legal and cant find a next legal on you rank, you back track. if
-        // you start illegal, and cant find a next legal on you
+        //the next move after a legal position will be on the next row unless the last row is off the board.
+        // then this will trigger a backtrack, which will increiment the previous row by one if thats on the board.
+        // this may end up putting that in an illegal position, wich will back track some arbiturary amount of times,
+        // and the final placement may be a few rows behind the current row.
         int[] illegal = new int[] {1, 6, 8, 3, 5, 0, 0, 0};
         int[] legal = new int[] {1, 6, 8, 3, 7, 0, 0, 0};
         int[] nextLegal = new int[] {1, 6, 8, 3, 7, 4, 0, 0};
@@ -22,9 +56,8 @@ public class Main {
         NQueens.nextLegalPosition(legal, legal.length);
         assert Arrays.equals(legal, nextLegal);
         NQueens.nextLegalPosition(nextLegal, nextLegal.length);
-        assert Arrays.equals(nextLegal, new int[] {1,6,8,5,0,0,0,0});
+        assert Arrays.equals(nextLegal, new int[] {1, 6, 8, 3, 7, 4, 2, 0});
         NQueens.nextLegalPosition(firstEightSolution, firstEightSolution.length);
-        //finds right index, puts it in wrong spot
         assert Arrays.equals(firstEightSolution, afterFirstSolution);
 
     }
