@@ -2,42 +2,45 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-//        testNextLegalPosition();
-//        testIsLegalAndEnglingBoard();
+        testNextLegalPosition();
+        testIsLegalAndEnglingBoard();
         testFirstSolution();
-        //TODO uncomment when turning in        testNumberOfSolutionsForN();
+        testNumberOfSolutionsForN();
     }
 
     private static void testFirstSolution() {
-//        NQueens.firstSolution(4);
-//        NQueens.firstSolution(5);
-//        NQueens.firstSolution(6);
-//        NQueens.firstSolution(7);
-        NQueens.firstSolution(8);
-//        NQueens.firstSolution(9);
-//        NQueens.firstSolution(11);
-//        NQueens.firstSolution(12);
-//        NQueens.firstSolution(13);
-//        NQueens.firstSolution(14);
-//        NQueens.firstSolution(15);
-//        NQueens.firstSolution(16);
-//        NQueens.firstSolution(17);
-//        NQueens.firstSolution(18);
-//        NQueens.firstSolution(19);
-//        NQueens.firstSolution(21);
-//        NQueens.firstSolution(22);
-//        NQueens.firstSolution(23);
-//        NQueens.firstSolution(24);
-//        NQueens.firstSolution(25);
-//        NQueens.firstSolution(26);
-//        NQueens.firstSolution(27);
-//        NQueens.firstSolution(28);
-//        NQueens.firstSolution(29);
-//        NQueens.firstSolution(31);
-//        NQueens.firstSolution(32);
-//        NQueens.firstSolution(33);
-//        NQueens.firstSolution(34);
-//        NQueens.firstSolution(35);
+        //about 5 minutes to run all, starts getting slow around 25ish
+        System.out.println("Printing first solutions up to n=35: ");
+        System.out.println(Arrays.toString(NQueens.firstSolution(4)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(5)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(6)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(7)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(8)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(9)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(11)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(12)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(13)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(14)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(15)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(16)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(17)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(18)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(19)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(21)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(22)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(23)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(24)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(25)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(26)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(27)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(28)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(29)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(31)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(32)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(33)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(34)));
+        System.out.println(Arrays.toString(NQueens.firstSolution(35)));
+        System.out.println("Done printing solutions.");
     }
 
     private static void testNextLegalPosition() {
@@ -82,24 +85,20 @@ public class Main {
         // vaild position/board
     }
 
-    /**
-     * Checks the validity of solver. Make sure VM flag -enableassertions is on
-     */
     private static void testNumberOfSolutionsForN() {
-        assert NQueens.numberOfSolutions(4) == 2;
-        assert NQueens.numberOfSolutions(5) == 10;
-        assert NQueens.numberOfSolutions(6) == 4;
-        assert NQueens.numberOfSolutions(7) == 40;
-        assert NQueens.numberOfSolutions(8) == 92;
-        assert NQueens.numberOfSolutions(9) == 352;
-        assert NQueens.numberOfSolutions(10) == 724;
-        assert NQueens.numberOfSolutions(11) == 2680;
-        assert NQueens.numberOfSolutions(12) == 14200;
-        assert NQueens.numberOfSolutions(13) == 73712;
-        assert NQueens.numberOfSolutions(14) == 365596;
-        assert NQueens.numberOfSolutions(15) == 2279184;
-        //TODO **GRADER**, Running all tests will take about 10 minutes
-        assert NQueens.numberOfSolutions(16) == 14772512;
-        assert NQueens.numberOfSolutions(17) == 95815104;
+        System.out.println("There are " + NQueens.numberOfSolutions(4) + " solutions to the 4-Queens problem.");
+        System.out.println("There are " + NQueens.numberOfSolutions(5) + " solutions to the 5-Queens problem.");
+        System.out.println("There are " + NQueens.numberOfSolutions(6) + " solutions to the 6-Queens problem.");
+        System.out.println("There are " + NQueens.numberOfSolutions(7) + " solutions to the 7-Queens problem.");
+        System.out.println("There are " + NQueens.numberOfSolutions(8) + " solutions to the 8-Queens problem.");
+        System.out.println("There are " + NQueens.numberOfSolutions(9) + " solutions to the 9-Queens problem.");
+        System.out.println("There are " + NQueens.numberOfSolutions(10) + " solutions to the 10-Queens problem.");
+        System.out.println("There are " + NQueens.numberOfSolutions(11) + " solutions to the 11-Queens problem.");
+        System.out.println("There are " + NQueens.numberOfSolutions(12) + " solutions to the 12-Queens problem.");
+        System.out.println("There are " + NQueens.numberOfSolutions(13) + " solutions to the 13-Queens problem.");
+        System.out.println("There are " + NQueens.numberOfSolutions(14) + " solutions to the 14-Queens problem.");
+        System.out.println("There are " + NQueens.numberOfSolutions(15) + " solutions to the 15-Queens problem.");
+        System.out.println("There are " + NQueens.numberOfSolutions(16) + " solutions to the 16-Queens problem.");
+        System.out.println("There are " + NQueens.numberOfSolutions(17) + " solutions to the 17-Queens problem.");
     }
 }

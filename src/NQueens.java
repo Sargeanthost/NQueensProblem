@@ -145,10 +145,41 @@ public class NQueens {
 
     public static int[] firstSolution(int n) {
         int[] board = new int[n];
-        do {
-            nextLegalPosition(board, n);
-            //infinite loop because doesnt override start
-        } while (isLegalPosition(board, n) && board[n - 1] == 0);
+        BitSet col = new BitSet(n);
+        BitSet major = new BitSet(2 * n - 1);
+        BitSet minor = new BitSet(2 * n - 1);
+        int[] solutions = new int[] {0};
+        findFirstSolution(0, board, n, solutions, col, major, minor);
         return board;
+    }
+
+    private static void findFirstSolution(int lastQueenRowIndex, int[] board, int n, int[] solutions, BitSet col,
+                                          BitSet major, BitSet minor) {
+        if (lastQueenRowIndex == n) {
+            solutions[0] += 1;
+            return;
+        }
+        for (int column = 0; column < n; column++) {
+            if (solutions[0] > 0) {
+                break;
+            }
+            if (!col.get(column) && !major.get(column - lastQueenRowIndex + n - 1) && !minor.get(
+                lastQueenRowIndex + column)) {
+                setBoard(board, lastQueenRowIndex, column + 1);
+                col.set(column, true);
+                major.set(column - lastQueenRowIndex + n - 1, true);
+                minor.set(lastQueenRowIndex + column, true);
+                //checks each column on current row.
+                findFirstSolution(lastQueenRowIndex + 1, board, n, solutions, col, major, minor);
+                //have to unset the failed positions since we now move past the column
+                col.set(column, false);
+                major.set(column - lastQueenRowIndex + n - 1, false);
+                minor.set(lastQueenRowIndex + column, false);
+            }
+        }
+    }
+
+    private static void setBoard(int[] board, int row, int col) {
+        board[row] = col;
     }
 }
