@@ -4,20 +4,19 @@ public class NQueens {
     //Guiding definitions:
     //default value is board[0] - 0
     //bit set: col = n, main = col-row - n-1+defaultValue, minor = col + row - defaultValue
-    // lastQueenRowIndex max value is n-1
-    //solution is defined as a n-1 row being filled and a call to isLegal with this board being true.
+    //lastQueenRowIndex max value is n
+    //solution is defined as the n-1st row being filled and a call to isLegal with this board being true.
 
     public static boolean isLegalPosition(int[] board, int n) {
-        //last row
+        //last row to accept partial solutions
         int lastQueenRowIndex = 0;
-        while (lastQueenRowIndex < n - 1 && board[lastQueenRowIndex] != 0) {
+        while (lastQueenRowIndex < n && board[lastQueenRowIndex] != 0) {
             lastQueenRowIndex++;
         }
         BitSet col = new BitSet(n);
         BitSet major = new BitSet(2 * n - 1);
         BitSet minor = new BitSet(2 * n - 1);
-
-        for (int row = 0; row <= lastQueenRowIndex; row++) {
+        for (int row = 0; row < lastQueenRowIndex; row++) {
             if (!col.get(board[row]) && !major.get(board[row] - row + n - 2) && !minor.get(board[row] + row - 1)) {
                 col.set(board[row], true);
                 major.set(board[row] - row + n - 2, true);
@@ -77,60 +76,72 @@ public class NQueens {
      * Modifies board to have the next legal move.
      *
      * @param board the board to modify
-     * @param n size of board
+     * @param n     size of board
      */
-    private static void nextLegalPosition(int[] board, int n) {
+    public static void nextLegalPosition(int[] board, int n) {
         int lastQueenRowIndex = 0;
-        while (lastQueenRowIndex < n - 1 && board[lastQueenRowIndex] != 0) {
+        while (lastQueenRowIndex < n && board[lastQueenRowIndex] != 0) {
             lastQueenRowIndex++;
         }
-        if (isLegalPosition(board, n)) {//legal. move to next row. should also account for "overflow" of solution
-            //for (i = board[lastQueenRowIndex] + 1 until i == n-1; i++) // current position. move right until falloff
-            //  if(i > n-1) //falloff
-            //      board[lastQueenRowIndex] = 0
-            //      nextLegalPosition(board, n) //backtrack
-            //  else //else needed?
-            //      board[LastQueenRowIndex] = i;
-            //      if (isLegalPosition(board, n))
-            //          RETURN SEQUENCE
-            //  //continue through loop as i will increment
-
-
-
-
-
-
-
-
-
-
-
-            for (int potCol = 0; potCol < n; potCol++) {//for each potential slot to the right. (cant go back)
-                board[lastQueenRowIndex + 1] = potCol;
-                if (isLegalPosition(board, n)) {
+        //if legal, we can move to the next row
+        if (isLegalPosition(board, n)) {
+            //need to have check that not on last row
+            int original = board[lastQueenRowIndex - 1];
+            for (int i = board[lastQueenRowIndex - 1] + 1; i <= n + 1; i++) {//<= because i is 1 indexed
+                if (i > n) {
+                    if (lastQueenRowIndex == n) {
+                        //if given solved board and cant move queen over, erase last row
+                        board[lastQueenRowIndex - 1] = 0;
+                        //and increment previous row, if in bound. if not set to 0, so we dont get back to where we
+                        // started
+                        if (board[lastQueenRowIndex - 2] == n) {
+                            board[lastQueenRowIndex - 2] = 0;
+                        } else {
+                            board[lastQueenRowIndex - 2] = board[lastQueenRowIndex - 2] + 1;
+                        }
+                        nextLegalPosition(board, n);
+                        break;
+                    }
+                    board[lastQueenRowIndex - 1] = original;
+                    board[lastQueenRowIndex] = 1;
+                    nextLegalPosition(board, n);
                     break;
+                } else {
+                    board[lastQueenRowIndex - 1] = i;
+                    if (isLegalPosition(board, n)) {
+                        break;
+                    }
                 }
             }
-
-        } else {//illegal position
-            //            for (int potCol = board[lastQueenRowIndex]; potCol < n; potCol++) {//for each potential
-            //            slot to the right. (cant go back)
-            //                board[]
-            //            }
-            //            board[lastQueenRowIndex] = 0;//erase this board,
-            //            nextLegalPosition(board, n);
+        } else {
+            // if not legal, we have to assume we havent reached a legal position at all on
+            // this row, and as such need to back track
+            //lastQueenRowIndex - 1 to get last row value;
+            //n+1 so that it goes into backtrack
+            for (int i = board[lastQueenRowIndex - 1] + 1; i <= n + 1; i++) {
+                if (i > n) {
+                    //dont need same check since it backtracks automatically
+                    board[lastQueenRowIndex - 1] = 0;//backtrack. coming from solution needs to incerment lastqueen-2
+                    nextLegalPosition(board, n);
+                } else {
+                    board[lastQueenRowIndex - 1] = i;
+                    if (isLegalPosition(board, n)) {
+                        break;
+                    }
+                }
+            }
         }
     }
 
-    public static int[] firstSolution(int n) {
-        int[] board = new int[n];
-        //seed board;
-        board[0] = 1;//queen in first row and first column
-        while (isLegalPosition(board, n) && lastEntry) {
-            nextLegalPosition(board, n);
-        }
-        //solve
-
-        return board;
-    }
+    //    public static int[] firstSolution(int n) {
+    //        int[] board = new int[n];
+    //        //seed board;
+    //        board[0] = 1;//queen in first row and first column
+    //        while (isLegalPosition(board, n) && lastEntry) {
+    //            nextLegalPosition(board, n);
+    //        }
+    //        //solve
+    //
+    //        return board;
+    //    }
 }
