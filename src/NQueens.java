@@ -89,8 +89,8 @@ public class NQueens {
         }
         out:
         for (int row = lastQueenRowIndex; row >= 0; row--) {
-            for (int col = board[row]+1; col <= n+1; col++) {
-                if (col==n+1){
+            for (int col = board[row] + 1; col <= n + 1; col++) {
+                if (col == n + 1) {
                     board[row] = 0;
                     break;
                 }

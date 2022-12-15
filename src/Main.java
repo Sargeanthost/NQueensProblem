@@ -48,10 +48,6 @@ public class Main {
     }
 
     private static void testNextLegalPosition() {
-        //the next move after a legal position will be on the next row unless the last row is off the board.
-        // then this will trigger a backtrack, which will increment the previous row by one if thats on the board.
-        // this may end up putting that in an illegal position, which will back track some arbitrary amount of times,
-        // and the final placement may be a few rows behind the current row.
         int[] illegal = new int[] {1, 6, 8, 3, 5, 0, 0, 0};
         int[] legal = new int[] {1, 6, 8, 3, 7, 0, 0, 0};
         int[] nextLegal = new int[] {1, 6, 8, 3, 7, 4, 0, 0};
@@ -66,12 +62,9 @@ public class Main {
         assert Arrays.equals(nextLegal, new int[] {1, 6, 8, 3, 7, 4, 2, 0});
         NQueens.nextLegalPosition(firstEightSolution, firstEightSolution.length);
         assert Arrays.equals(firstEightSolution, afterFirstSolution);
-
     }
 
     private static void testIsLegalAndEnglingBoard() {
-        //arr[row] = {column}
-
         assert NQueens.isLegalPosition(new int[] {1, 6, 8, 3, 7, 4, 2, 5}, 8);
         assert !NQueens.isLegalPosition(new int[] {1, 1, 1, 1, 1, 1, 1, 1}, 8);
         assert !NQueens.isLegalPosition(new int[] {1, 2, 3, 4, 5, 6, 7, 8}, 8);
@@ -80,13 +73,6 @@ public class Main {
         assert !NQueens.isLegalPosition(new int[] {1, 6, 8, 3, 5, 0, 0, 0}, 8);
         assert NQueens.isLegalPosition(new int[] {1, 6, 8, 3, 7, 4, 0, 0}, 8);
         assert !NQueens.isLegalPosition(new int[] {1, 6, 8, 3, 7, 4, 2, 6}, 8);
-
-        //The position returns false when the diagonals or columns collide
-        //An elegant way to be to represent this is with just bits for each main/minor diag and column, and preform a
-        // constant time lookup before inserting a queen. This only works on building boards, though. The way to
-        // optimise for an arbitrary board is to calculate a row col offset, and check if two queens have the same
-        // offset. this is like the slope of a line, and if the have the same slope, they intersect and are not a
-        // valid position/board
     }
 
     private static void testNumberOfSolutionsForN() {
