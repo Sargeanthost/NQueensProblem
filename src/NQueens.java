@@ -9,6 +9,7 @@ public class NQueens {
 
     public static boolean isLegalPosition(int[] board, int n) {
         //last row to accept partial solutions
+        //bitset to keep memory low
         int lastQueenRowIndex = 0;
         while (lastQueenRowIndex < n && board[lastQueenRowIndex] != 0) {
             lastQueenRowIndex++;
@@ -79,65 +80,23 @@ public class NQueens {
      * @param n     size of board
      */
     public static void nextLegalPosition(int[] board, int n) {
-        //backtrack: increment previous row queen by one file if within bounds, and if not set to 0
-        //if im first row, all positions are legal, so call with second row seeded
-        //else
-        //if i'm illegal, move until legal. if cannot find legal on current row, backtrack.
-        //if im legal, move until legal. if cannot find legal on current row, go to next row and check. if at edge of
-        // board,
-        // backtrack
-        int lastQueenRowIndex = 0;
-        boolean babyStart = false;
+        int lastQueenRowIndex = 0;//mutates at capacity
         while (lastQueenRowIndex < n && board[lastQueenRowIndex] != 0) {
             lastQueenRowIndex++;
         }
-        //== these will return the next solution, but they are overriden by the next section
-        if (lastQueenRowIndex == 0) {
-            babyStart = true;
-            board[0] = board[0] + 1;
-            nextLegalPosition(board, n);
+        if (lastQueenRowIndex == n || !isLegalPosition(board, n)) {
+            lastQueenRowIndex--;
         }
-        if (lastQueenRowIndex == 1) {
-            babyStart = true;
-            board[1] = 1;
-            nextLegalPosition(board, n);
-        }
-        //=====
-        if (!babyStart) {//try to find way to not use this check
-            if (isLegalPosition(board, n)) {
-                int original = board[lastQueenRowIndex - 1];
-                for (int col = board[lastQueenRowIndex - 1] + 1; col <= n + 1; col++) {
-                    if (col > n && lastQueenRowIndex == n) {//backtrack "method"
-                        board[lastQueenRowIndex - 1] = 0;
-                        board[lastQueenRowIndex - 2] = (board[lastQueenRowIndex - 2] + 1) % (n + 1);
-                        nextLegalPosition(board, n);
-                        break;
-                    } else if (col > n) {
-                        board[lastQueenRowIndex - 1] = original;
-                        board[lastQueenRowIndex] = 1;
-                        nextLegalPosition(board, n);
-                        break;
-                    }
-                    board[lastQueenRowIndex - 1] = col;
-                    if (isLegalPosition(board, n)) {
-                        break;
-                    }
+        out:
+        for (int row = lastQueenRowIndex; row >= 0; row--) {
+            for (int col = board[row]+1; col <= n+1; col++) {
+                if (col==n+1){
+                    board[row] = 0;
+                    break;
                 }
-            } else {
-                for (int col = board[lastQueenRowIndex - 1] + 1; col <= n + 1; col++) {
-                    if (col > n) {
-                        board[lastQueenRowIndex - 1] = 0;
-                        board[lastQueenRowIndex - 2] = (board[lastQueenRowIndex - 2] + 1) % (n + 1);
-                        if (lastQueenRowIndex == 3) {//3 is magic number for startRow + backtrackingMutations(2)
-                            board[0] = (board[0] + 1) % (n + 1);
-                        }
-                        nextLegalPosition(board, n);
-                        break;
-                    }
-                    board[lastQueenRowIndex - 1] = col;
-                    if (isLegalPosition(board, n)) {
-                        break;
-                    }
+                board[row] = (col);
+                if (isLegalPosition(board, n)) {
+                    break out;
                 }
             }
         }
